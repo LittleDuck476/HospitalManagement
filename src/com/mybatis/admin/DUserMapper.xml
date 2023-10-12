@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- com.dao.DUserDao对应Dao接口 -->
+<mapper namespace="com.dao.DUserDao">
+	<!-- 查询医生信息 -->
+	<select id="dlogin" parameterType="DUser" resultType="DUser">
+		select * from doctor where username=#{username} and password=#{password} and active=1
+	</select>
+	<!-- 根据医生id查询挂号单 -->
+	<select id="selectRTableByDId" parameterType="Integer" resultType="map">
+		select p.id as pid, p.username as pname, p.tel as ptel from 
+		registrationtable r
+		INNER JOIN patient p ON p.id=r.p_id
+		INNER JOIN doctor d ON d.id=r.d_id
+		where d.id=#{did}
+	</select>
+	<!-- 查询所有项目种类和价格 -->
+	<select id="seeProTypeList" resultType="map">
+		select * from projecttype 
+	</select>
+	<!-- 添加检查化验单 -->
+	<insert id="addCTable" parameterType="map">
+		insert into checktable(id,p_id,d_id,pro_id,fee,outcome) values (null,#{pid},#{did},#{proid},-1,-1)
+	</insert>
+	<!-- 根据医生id查询未付费的检查化验单 -->
+	<select id="selectCTableByDid" parameterType="Integer" resultType="map">
+		select p.username as pname, p.tel as ptel, c.id, pro.id as proid, pro.name as proname from
+		checktable c
+		INNER JOIN patient p ON p.id=c.p_id
+		INNER JOIN projecttype pro ON pro.id=c.pro_id
+		where fee=-1 and c.d_id=#{did}
+	</select>
+	<!-- 检查化验单id修改检查化验单 -->
+	<update id="updCTable" parameterType="map">
+		update checktable set pro_id=#{proid} where id=#{id}
+	</update>
+	<!-- 检查化验单id删除检查化验单 -->
+	<delete id="delCTable" parameterType="Integer">
+		delete from checktable where id=#{id}
+	</delete>
+	<!-- 开病情诊断和医嘱 -->
+	<insert id="addDisTable" parameterType="map">
+		insert into diseasetable(id,p_id,d_id,disease,advice) values (null,#{pid},#{did},#{disease},#{advice})
+	</insert>
+	<!-- 查询所有药品种类 -->
+	<select id="seeMedicine" resultType="map">
+		select * from medicine
+	</select>
+	<!-- 开处方 -->
+	<insert id="addPreTable" parameterType="map">
+		insert into prescription(id,p_id,d_id,med_id,fee,outcome,amount) values (null,#{pid},#{did},#{medid},-1,-1,#{amount}) 
+	</insert>
+	<!-- 根据医生id查询未付费的处方 -->
+	<select id="selectPreTableByDid" parameterType="Integer" resultType="map">
+		SELECT pre.id ,p.username as pname, p.tel as ptel, m.id as medid, m.name as medname, pre.amount FROM prescription pre
+		INNER JOIN patient p ON p.id=pre.p_id
+		INNER JOIN medicine m ON m.id=pre.med_id
+		where pre.d_id=#{did} and pre.fee=-1
+	</select>
+	<!-- 处方单id修改处方单 -->
+	<update id="updPreTable" parameterType="map">
+		update prescription set med_id=#{medid},amount=#{amount} where id=#{id}
+	</update>
+	<!-- 处方单id删除处方单 -->
+	<delete id="delPreTable" parameterType="Integer">
+		delete from prescription where id=#{id}
+	</delete>
+</mapper>

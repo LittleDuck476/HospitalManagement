@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- com.dao.PUserDao对应Dao接口 -->
+<mapper namespace="com.dao.PUserDao">
+	<!-- 根据手机号查询患者用户信息 -->
+	<select id="register"  parameterType="PUser" resultType="PUser">
+		select * from patient where tel=#{tel}
+	</select>
+	<!-- 注册 -->
+	<insert id="insertp" parameterType="PUser">
+		insert into patient 
+		values(null,#{username},#{password},#{tel},2,1)
+	</insert>
+	<!-- 根据手机号和密码查询患者信息 -->
+	<select id="login" parameterType="PUser" resultType="PUser">
+		select * from patient where tel=#{tel} AND password=#{password} and active=1
+	</select>
+	<!-- 根据病患id查询挂号单 -->
+	<select id="selectregByid" resultType="map" parameterType="Integer">
+		select p.username as pname, p.tel as ptel, d.name as dname, d.room as droom, d.type as dtype from 
+		registrationtable r
+		INNER JOIN patient p ON p.id=r.p_id
+		INNER JOIN doctor d ON d.id=r.d_id
+		where p.id=#{pid}
+	</select>
+	<!-- 根据病患id查询检查化验单 -->
+	<select id="selectcheckByid" resultType="map" parameterType="Integer">
+		SELECT p.username as pname, p.tel as ptel, d.name as dname, d.room as droom, pro.name as proname, c.outcome FROM checktable c
+		INNER JOIN patient p ON p.id=c.p_id 
+		INNER JOIN doctor d ON d.id=c.d_id
+		INNER JOIN projecttype pro ON pro.id=c.pro_id
+		where p.id=#{pid}
+	</select>
+	<!-- 根据病患id查询诊断单 -->
+	<select id="selectdisByPid" resultType="map" parameterType="Integer">
+		select p.username as pname, p.tel as ptel, d.name as dname, d.room as droom, dis.disease, dis.advice
+		from diseasetable dis
+		INNER JOIN patient p ON p.id=dis.p_id
+		INNER JOIN doctor d ON d.id=dis.d_id
+		where p.id=#{pid}
+	</select>
+</mapper>
