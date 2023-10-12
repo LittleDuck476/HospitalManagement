@@ -1,0 +1,139 @@
+ .bg{
+	width: 100%;
+	height: 570px;
+	background: url(../img/img1.jpg) no-repeat center top;
+}
+.bg .wrap{
+	width: 900px;
+	height: 100%;
+	/* background-color: antiquewhite; */
+	margin: 0 auto;
+	position: relative;
+	z-index: 1;
+}
+
+.bg .wrap .links{
+	position: absolute;
+	left: 0%;
+	top: 50%;
+	text-align: center;
+	transform: translateY(-50%);
+	right: 0;
+}
+
+.bg .wrap .links li{
+	width: 140px;
+	border-radius: 8px;
+	box-shadow: 0px 16px 24px 0px rgb(0 0 0 / 40%);
+	text-align: center;
+	overflow: hidden;
+	color: #fff;
+	display: inline-block;
+	padding: 50px 0;
+	position: relative;
+}
+
+.bg .wrap .links li:nth-child(n+2) {
+    margin-left: -40px;
+	}
+
+.bg .wrap .links .p{
+	font-size: 25px;
+}
+
+.bg .wrap .links li a{
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	cursor: pointer;
+}
+
+.bg .wrap .links .link{
+	display: block;
+	width: 100px;
+	height: 29px;
+	margin: auto;
+	border-radius: 15px;
+	box-shadow: 0px 0px 16px 0px rgb(2 2 2 / 10%);
+	font-size: 13px;
+	line-height: 29px;
+	color: #fff;
+	text-transform: uppercase;
+	margin-top: 16px;
+	
+}
+
+.bg .wrap .links .l1{
+	background-image: url(../img/png1.png);
+}
+.bg .wrap .links .l1:hover{
+	width: 150px;
+	height: 70px;
+}
+.bg .wrap .links .l1 .link{
+	background-color: #5fbac0;
+}
+
+.bg .wrap .links .l2{
+	background-image: url(../img/png2.png);
+	transform: translateY(60px);
+}
+.bg .wrap .links .l2:hover{
+	width: 150px;
+	height: 70px;
+}
+.bg .wrap .links .l2 .link{
+	background-color: #f5d58d;
+}
+
+.bg .wrap .links .l3{
+	background-image: url(../img/png3.png);
+}
+.bg .wrap .links .l3:hover{
+	width: 150px;
+	height: 70px;
+}
+.bg .wrap .links .l3 .link{
+	background-color: #d2303f;
+	}
+
+.bg .wrap .links .l4{
+	background-image: url(../img/png4.png);
+	transform: translateY(60px);
+}
+.bg .wrap .links .l4:hover{
+	width: 150px;
+	height: 70px;
+}
+.bg .wrap .links .l4 p{
+	color: #333333;
+}
+.bg .wrap .links .l4 .link{
+	background-color: #FFFFFF;
+	color: #333333;
+}
+
+.bg .wrap .links .l5{
+	background-image: url(../img/png5.png);
+}
+.bg .wrap .links .l5:hover{
+	width: 150px;
+	height: 70px;
+}
+.bg .wrap .links .l5 .link{
+	background-color: #00a04e;
+}
+
+.bg .wrap .links .l6{
+	background-color: rgba(221, 204, 255,0.9);
+	transform: translateY(60px);
+}
+.bg .wrap .links .l6:hover{
+	width: 150px;
+	height: 70px;
+}
+.bg .wrap .links .l6 .link{
+	background-color: #eee5ff;
+}
