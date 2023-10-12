@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- com.dao.MedicineDao对应Dao接口 -->
+<mapper namespace="com.dao.MedicineDao">
+	<!-- 查询药房处信息 -->
+	<select id="mlogin" parameterType="WUser" resultType="WUser">
+		select * from work where username=#{username} and password=#{password} and role=6
+	</select>
+	<!-- 查询已缴费的处方单 -->
+	<select id="seePrePaid" parameterType="Integer" resultType="map">
+		SELECT pre.id, pre.med_id as medid, p.username as pname, p.tel as ptel, d.name as dname, d.room as droom, m.name as medname, pre.amount, m.store, pre.outcome FROM prescription pre
+		INNER JOIN patient p ON p.id=pre.p_id 
+		INNER JOIN doctor d ON d.id=pre.d_id
+		INNER JOIN medicine m ON m.id=pre.med_id
+		where fee=1
+	</select>
+	<!-- 发放结果 -->
+	<update id="updPreOutcome" parameterType="Integer">
+		update prescription set outcome=1 where id=#{id}
+	</update>
+	<!-- 修改库存 -->
+	<update id="updMedstore" parameterType="map">
+		update medicine set store=store-#{amount} where id=#{id}
+	</update>
+</mapper>

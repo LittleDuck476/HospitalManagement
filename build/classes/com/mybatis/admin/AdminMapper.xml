@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- com.dao.AdminDao对应Dao接口 -->
+<mapper namespace="com.dao.AdminDao">
+	<!-- 查询管理员信息 -->
+	<select id="alogin" parameterType="WUser" resultType="WUser">
+		select * from work where username=#{username} and password=#{password} and role=1
+	</select>
+	<!-- 查询所有病患 -->
+	<select id="selectAllP" resultType="map">
+		select * from patient 
+	</select>
+	<!-- 添加病患 -->
+	<insert id="addPUser" parameterType="PUser">
+		insert into patient 
+		values(null,#{username},#{password},#{tel},2,1)
+	</insert>
+	<!-- 已注册的手机号不能添加 -->
+	<select id="booleanadd" parameterType="PUser" resultType="PUser">
+		select * from patient where tel=#{tel}
+	</select>
+	<!-- 根据病患id查找要修改的病患 -->
+	<select id="selectPById" parameterType="Integer" resultType="PUser">
+		select * from patient where id=#{id}
+	</select>
+	<!-- 修改了患者电话是否与其他患者相同判断 -->
+	<select id="booleanupd" resultType="PUser" parameterType="PUser">
+		select * from patient where id &lt;&gt; #{id} and tel=#{tel}
+	</select>
+	<!-- 修改病患信息 -->
+	<update id="updPUser" parameterType="PUser">
+		update patient set username=#{username},password=#{password},tel=#{tel},active=#{active} where id=#{id}
+	</update>
+	<!-- 删除病患信息 -->
+	<update id="delPUser" parameterType="Integer">
+		update patient set active=-1 where id=#{id}
+	</update>
+	
+	<!-- 查询所有医生 -->
+	<select id="selectAllD" resultType="map">
+		select * from doctor 
+	</select>
+	<!-- 已有的医生员工代号不能添加 -->
+	<select id="booleanaddD" parameterType="DUser" resultType="DUser">
+		select * from doctor where username=#{username}
+	</select>
+	<!-- 添加医生 -->
+	<insert id="addDUser" parameterType="DUser">
+		insert into doctor values(null,#{username},#{password},#{room},#{type},3,#{name},1,#{price})
+	</insert>
+	<!-- 根据医生id查找要修改的医生 -->
+	<select id="selectDById" parameterType="Integer" resultType="DUser">
+		select * from doctor where id=#{id}
+	</select>
+	<!-- 修改了医生员工代号是否与其他医生员工代号相同判断 -->
+	<select id="booleanupdD" resultType="DUser" parameterType="DUser">
+		select * from doctor where id &lt;&gt; #{id} and username=#{username}
+	</select>
+	<!-- 修改医生信息 -->
+	<update id="updDUser" parameterType="DUser">
+		update doctor set username=#{username},password=#{password},room=#{room},type=#{type},name=#{name},active=#{active},price=#{price}
+		where id=#{id}
+	</update>
+	<!-- 删除医生信息 -->
+	<update id="delDUser" parameterType="Integer">
+		update doctor set active=-1 where id=#{id}
+	</update>
+	
+	<!-- 查询所有医护人员 -->
+	<select id="selectAllW" resultType="map">
+		select * from work
+	</select>
+	<!-- 已有的医护人员员工代号不能添加 -->
+	<select id="booleanaddW" parameterType="WUser" resultType="WUser">
+		select * from work where username=#{username} and role=#{role}
+	</select>
+	<!-- 添加医护人员 -->
+	<insert id="addWUser" parameterType="WUser">
+		insert into work values(null,#{username},#{password},#{role})
+	</insert>
+	<!-- 根据医护人员id查找要修改的医护人员 -->
+	<select id="selectWById" parameterType="Integer" resultType="WUser">
+		select * from work where id=#{id}
+	</select>
+	<!-- 修改了医护人员员工代号是否与其他医护人员员工代号相同判断 -->
+	<select id="booleanupdW" parameterType="WUser" resultType="WUser">
+		select * from work where id &lt;&gt; #{id} and username=#{username} and role=#{role}
+	</select>
+	<!-- 修改医护人员信息 -->
+	<update id="updWUser" parameterType="WUser">
+		update work set username=#{username},password=#{password} where id=#{id}
+	</update>
+	<!-- 删除医护人员信息 -->
+	<delete id="delWUser" parameterType="Integer">
+		delete from work where id=#{id}
+	</delete>
+	
+	<!-- 查询所有项目 -->
+	<select id="selectAllPro" resultType="map">
+		select * from projecttype
+	</select>
+	<!-- 已有的项目不能添加 -->
+	<select id="booleanaddPro" parameterType="Project" resultType="Project">
+		select * from projecttype where name=#{name}
+	</select>
+	<!-- 添加项目 -->
+	<insert id="addPro" parameterType="Project">
+		insert into projecttype values(null,#{name},#{price})
+	</insert>
+	<!-- 根据项目id查找要修改的项目 -->
+	<select id="selectProById" parameterType="Integer" resultType="Project">
+		select * from projecttype where id=#{id}
+	</select>
+	<!-- 修改了项目是否与其他项目相同判断 -->
+	<select id="booleanupdPro" parameterType="Project" resultType="Project">
+		select * from projecttype where id &lt;&gt; #{id} and name=#{name}
+	</select>
+	<!-- 修改项目 -->
+	<update id="updPro" parameterType="Project">
+		update projecttype set name=#{name},price=#{price} where id=#{id}
+	</update>
+	<!-- 删除项目 -->
+	<delete id="delPro" parameterType="Integer">
+		delete from projecttype where id=#{id}
+	</delete>
+	
+	<!-- 查询所有药品 -->
+	<select id="selectAllM" resultType="map">
+		select * from medicine
+	</select>
+	<!-- 已有的药品不能添加 -->
+	<select id="booleanaddM" parameterType="Medicine" resultType="Medicine">
+		select * from medicine where name=#{name}
+	</select>
+	<!-- 添加药品  -->
+	<insert id="addM" parameterType="Medicine">
+		insert into medicine values(null,#{name},#{price},#{store})
+	</insert>
+	<!-- 根据项目id查找要修改的项目 -->
+	<select id="selectMById" parameterType="Integer" resultType="Medicine">
+		select * from medicine where id=#{id}
+	</select>
+	<!-- 修改了药品是否与其他药品相同判断 -->
+	<select id="booleanupdM" parameterType="Medicine" resultType="Medicine">
+		select * from medicine where id &lt;&gt; #{id} and name=#{name}
+	</select>
+	<!-- 修改药品 -->
+	<update id="updM" parameterType="Medicine">
+		update medicine set name=#{name},price=#{price},store=#{store} where id=#{id}
+	</update>
+	<!-- 删除药品 -->
+	<delete id="delM" parameterType="Integer">
+		delete from medicine where id=#{id}
+	</delete>
+	
+	<!-- 查询某一类人员 -->
+	<select id="selectRole" parameterType="Integer" resultType="map">
+		select * from work where role=#{role}
+	</select>
+</mapper>

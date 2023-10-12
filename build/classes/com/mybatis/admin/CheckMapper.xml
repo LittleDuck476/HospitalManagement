@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- com.dao.CheckDao对应Dao接口 -->
+<mapper namespace="com.dao.CheckDao">
+	<!-- 查询检查化验处信息 -->
+	<select id="clogin" parameterType="WUser" resultType="WUser">
+		select * from work where username=#{username} and password=#{password} and role=5
+	</select>
+	<!-- 查询已缴费的检查化验单 -->
+	<select id="seeCPaidByProid" parameterType="Integer" resultType="map">
+		SELECT c.id, p.username as pname, p.tel as ptel, d.name as dname, d.room as droom, pro.name as proname, c.outcome FROM checktable c
+		INNER JOIN patient p ON p.id=c.p_id 
+		INNER JOIN doctor d ON d.id=c.d_id
+		INNER JOIN projecttype pro ON pro.id=c.pro_id
+		where fee=1 and pro_id=#{id}
+	</select>
+	<!-- 填写化验结果 -->
+	<update id="updCOutcome" parameterType="Integer">
+		update checktable set outcome=1 where id=#{id}
+	</update>
+</mapper>

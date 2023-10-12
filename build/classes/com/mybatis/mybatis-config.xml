@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <typeAlias alias="PUser" type="com.po.PUser"/>
+        <typeAlias alias="WUser" type="com.po.WUser"/>
+        <typeAlias alias="DUser" type="com.po.DUser"/>
+        <typeAlias alias="Project" type="com.po.Project"/>
+        <typeAlias alias="Medicine" type="com.po.Medicine"/>
+     </typeAliases>
+	 <mappers>
+        <mapper resource="com/mybatis/admin/PUserMapper.xml"/>
+        <mapper resource="com/mybatis/admin/RegistrationMapper.xml"/>
+        <mapper resource="com/mybatis/admin/DUserMapper.xml"/>
+        <mapper resource="com/mybatis/admin/CheckMapper.xml"/>
+        <mapper resource="com/mybatis/admin/MedicineMapper.xml"/>
+        <mapper resource="com/mybatis/admin/AdminMapper.xml"/>
+ 	</mappers>
+</configuration>
+
